@@ -2,7 +2,7 @@ package com.mydomain.accounting.exception;
 
 public class ErrorExceptionBuilder {
     private String message;
-    private String code;
+    private String errorCode;
     private ServiceException.ErrorType errorType;
     private int statusCode;
 
@@ -16,8 +16,8 @@ public class ErrorExceptionBuilder {
         return this;
     }
 
-    public ErrorExceptionBuilder code(String code) {
-        this.code = code;
+    public ErrorExceptionBuilder errorCode(String code) {
+        this.errorCode = code;
         return this;
     }
 
@@ -27,6 +27,6 @@ public class ErrorExceptionBuilder {
     }
 
     public ErrorException build() {
-        return new ErrorException(message, code, statusCode, errorType);
+        return new ErrorException(message, errorCode, statusCode, errorType);
     }
 }
