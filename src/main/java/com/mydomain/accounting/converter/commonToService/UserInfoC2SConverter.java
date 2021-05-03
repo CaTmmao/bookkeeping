@@ -11,7 +11,9 @@ public class UserInfoC2SConverter extends Converter<UserInfoCommon, UserInfoServ
     @Override
     protected UserInfoService doForward(UserInfoCommon userInfoCommon) {
         String name = userInfoCommon.getUsername();
-        return new UserInfoServiceBuilder().setUsername(name).createUserInfo();
+        return new UserInfoServiceBuilder()
+                .setUsername(name)
+                .createUserInfo();
     }
 
     @Override
