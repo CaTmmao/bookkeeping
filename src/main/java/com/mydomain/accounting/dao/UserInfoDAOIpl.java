@@ -5,10 +5,10 @@ import com.mydomain.accounting.model.persistence.UserInfoPersistence;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDao {
+public class UserInfoDAOIpl implements UserInfoDAO {
     private final UserInfoMapper userInfoMapper;
 
-    public UserDao(UserInfoMapper userInfoMapper) {
+    public UserInfoDAOIpl(UserInfoMapper userInfoMapper) {
         this.userInfoMapper = userInfoMapper;
     }
 
