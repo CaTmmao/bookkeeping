@@ -12,7 +12,13 @@ public class UserInfoP2CConverter extends Converter<UserInfoPersistence, UserInf
     protected UserInfoCommon doForward(UserInfoPersistence userInfoPersistence) {
         int id = userInfoPersistence.getId();
         String name = userInfoPersistence.getUsername();
-        return new UserInfoCommonBuilder().setId(id).setUsername(name).createUserInfo();
+        String pwd = userInfoPersistence.getPassword();
+
+        return new UserInfoCommonBuilder()
+                .setId(id)
+                .setUsername(name)
+                .setPassword(pwd)
+                .createUserInfo();
     }
 
     @Override
