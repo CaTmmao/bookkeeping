@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class User {
+public class UserInfoServiceIpl implements UserInfoService {
     private final UserInfoP2CConverter userInfoP2CConverter;
     private final UserDao userDao;
 
     @Autowired
-    public User(UserInfoP2CConverter userInfoP2CConverter, UserDao userDao) {
+    public UserInfoServiceIpl(UserInfoP2CConverter userInfoP2CConverter, UserDao userDao) {
         this.userInfoP2CConverter = userInfoP2CConverter;
         this.userDao = userDao;
     }
