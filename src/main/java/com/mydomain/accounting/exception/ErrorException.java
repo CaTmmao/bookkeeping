@@ -1,17 +1,17 @@
 package com.mydomain.accounting.exception;
 
 /**
- * HTTP 响应中返回的错误对象（包含客户端错误和服务器错误）
+ * HTTP 响应中返回的错误对象（包含客户端错误和服务器错误）.
  */
 public class ErrorException {
-    private String message;
-    private String code;
-    private int statusCode;
-    private ServiceException.ErrorType errorType;
+    private String message; // 错误信息
+    private String errorCode; // 简洁版错误信息
+    private int statusCode; // 状态码
+    private ServiceException.ErrorType errorType; // 错误类型
 
-    public ErrorException(String message, String code, int statusCode, ServiceException.ErrorType errorType) {
+    public ErrorException(String message, String errorCode, int statusCode, ServiceException.ErrorType errorType) {
         this.message = message;
-        this.code = code;
+        this.errorCode = errorCode;
         this.statusCode = statusCode;
         this.errorType = errorType;
     }
@@ -24,12 +24,12 @@ public class ErrorException {
         this.message = message;
     }
 
-    public String getCode() {
-        return code;
+    public String getErrorCode() {
+        return errorCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 
     public ServiceException.ErrorType getErrorType() {

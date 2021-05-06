@@ -1,8 +1,8 @@
 package com.mydomain.accounting.converter.persistenceToCommon;
 
 import com.google.common.base.Converter;
-import com.mydomain.accounting.model.common.UserInfoCommonBuilder;
 import com.mydomain.accounting.model.common.UserInfoCommon;
+import com.mydomain.accounting.model.common.UserInfoCommonBuilder;
 import com.mydomain.accounting.model.persistence.UserInfoPersistence;
 import org.springframework.stereotype.Service;
 

@@ -16,12 +16,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserInfoDAOIplTest {
+class UserInfoDaoIplTest {
     @Mock
     UserInfoMapper userInfoMapper;
 
     @InjectMocks
-    UserInfoDAOIpl userInfoDAOIpl ;
+    UserInfoDaoIpl userInfoDAOIpl ;
 
     @Test
     void testGetUserInfoById() {

@@ -1,7 +1,7 @@
 package com.mydomain.accounting.service;
 
 import com.mydomain.accounting.converter.persistenceToCommon.UserInfoP2CConverter;
-import com.mydomain.accounting.dao.UserInfoDAOIpl;
+import com.mydomain.accounting.dao.UserInfoDaoIpl;
 import com.mydomain.accounting.dao.manager.UserInfoMapper;
 import com.mydomain.accounting.exception.ResourceNotFoundException;
 import com.mydomain.accounting.model.common.UserInfoCommon;
@@ -26,7 +26,7 @@ class UserInfoServiceIplTest {
     UserInfoMapper userInfoMapper;
 
     @Mock
-    private UserInfoDAOIpl userInfoDAOIpl;
+    private UserInfoDaoIpl userInfoDAOIpl;
     private UserInfoServiceIpl userInfoServiceIpl;
 
     @BeforeEach

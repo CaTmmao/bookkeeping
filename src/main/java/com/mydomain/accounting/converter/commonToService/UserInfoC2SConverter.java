@@ -2,8 +2,8 @@ package com.mydomain.accounting.converter.commonToService;
 
 import com.google.common.base.Converter;
 import com.mydomain.accounting.model.common.UserInfoCommon;
-import com.mydomain.accounting.model.service.UserInfoServiceBuilder;
 import com.mydomain.accounting.model.service.UserInfoService;
+import com.mydomain.accounting.model.service.UserInfoServiceBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,8 +12,8 @@ public class UserInfoC2SConverter extends Converter<UserInfoCommon, UserInfoServ
     protected UserInfoService doForward(UserInfoCommon userInfoCommon) {
         String name = userInfoCommon.getUsername();
         return new UserInfoServiceBuilder()
-                .setUsername(name)
-                .createUserInfo();
+            .setUsername(name)
+            .createUserInfo();
     }
 
     @Override
