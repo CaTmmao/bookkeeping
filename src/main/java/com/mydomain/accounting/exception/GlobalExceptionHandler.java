@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     ResponseEntity<?> handleServiceException(ServiceException e) {
-        ErrorException errorException =
-                new ErrorExceptionBuilder()
+        ErrorResponse errorResponse =
+                new ErrorResponseBuilder()
                         .statusCode(e.getStatus().value())
                         .errorType(e.getErrorType())
                         .errorCode(e.getErrorCode())
                         .message(e.getMessage())
                         .build();
 
-        return ResponseEntity.status(e.getStatus()).body(errorException);
+        return ResponseEntity.status(e.getStatus()).body(errorResponse);
     }
 }
