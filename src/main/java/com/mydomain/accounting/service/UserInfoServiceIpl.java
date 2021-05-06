@@ -1,14 +1,13 @@
 package com.mydomain.accounting.service;
 
+import java.util.Optional;
+
 import com.mydomain.accounting.converter.persistenceToCommon.UserInfoP2CConverter;
 import com.mydomain.accounting.dao.UserInfoDaoIpl;
 import com.mydomain.accounting.exception.ResourceNotFoundException;
 import com.mydomain.accounting.model.common.UserInfoCommon;
-import com.mydomain.accounting.model.persistence.UserInfoPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserInfoServiceIpl implements UserInfoService {
@@ -22,10 +21,8 @@ public class UserInfoServiceIpl implements UserInfoService {
     }
 
     public UserInfoCommon getUserInfoById(int id) {
-        UserInfoPersistence userInfoPersistence =
-                Optional.ofNullable(userInfoDaoIpl.getUserInfoById(id))
-                        .orElseThrow(() -> new ResourceNotFoundException("找不到该用户"));
-
-        return userInfoP2CConverter.convert(userInfoPersistence);
+        return Optional.ofNullable(userInfoDaoIpl.getUserInfoById(id))
+            .map(userInfoP2CConverter::convert)
+            .orElseThrow(() -> new ResourceNotFoundException("找不到该用户"));
     }
 }
