@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserInfoServiceIpl implements UserInfoService {
-    static final int SALT_INTERACTIONS = 1000;
+    static final int SALT_ITERATIONS = 1000;
     private final UserInfoP2CConverter userInfoP2CConverter;
     private final UserInfoDao userInfoDao;
 
@@ -64,7 +64,7 @@ public class UserInfoServiceIpl implements UserInfoService {
         }
 
         String salt = UUID.randomUUID().toString();
-        String encryptedPassword = new Sha256Hash(password, salt, SALT_INTERACTIONS).toBase64();
+        String encryptedPassword = new Sha256Hash(password, salt, SALT_ITERATIONS).toBase64();
 
         UserInfoPersistence newUserInfo = new UserInfoPersistenceBuilder()
             .setUsername(username)
