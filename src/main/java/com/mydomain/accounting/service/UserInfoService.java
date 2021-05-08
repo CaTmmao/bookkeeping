@@ -4,4 +4,6 @@ import com.mydomain.accounting.model.common.UserInfoCommon;
 
 public interface UserInfoService {
     UserInfoCommon getUserInfoById(int id);
+
+    void login(String username, String password);
 }
