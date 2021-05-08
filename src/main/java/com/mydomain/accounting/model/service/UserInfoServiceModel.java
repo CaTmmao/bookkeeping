@@ -3,7 +3,7 @@ package com.mydomain.accounting.model.service;
 import org.springframework.stereotype.Service;
 
 @Service("UserInfoService")
-public class UserInfoService {
+public class UserInfoServiceModel {
     String username;
 
     public String getUsername() {
@@ -14,9 +14,9 @@ public class UserInfoService {
         this.username = username;
     }
 
-    public UserInfoService() {}
+    public UserInfoServiceModel() {}
 
-    public UserInfoService(String username) {
+    public UserInfoServiceModel(String username) {
         this.username = username;
     }
 }
