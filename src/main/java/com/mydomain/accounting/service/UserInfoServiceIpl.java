@@ -40,7 +40,7 @@ public class UserInfoServiceIpl implements UserInfoService {
 
     @Override
     public UserInfoCommon getUserInfoByUsername(String username) {
-        return Optional.ofNullable(userInfoDao.getUserInfoByUserName(username))
+        return Optional.ofNullable(userInfoDao.getUserInfoByUsername(username))
             .map(userInfoP2CConverter::convert)
             .orElseThrow(() -> new ResourceNotFoundException("找不到该用户"));
     }
@@ -57,7 +57,7 @@ public class UserInfoServiceIpl implements UserInfoService {
 
     @Override
     public UserInfoCommon register(String username, String password) {
-        UserInfoPersistence userInfo = userInfoDao.getUserInfoByUserName(username);
+        UserInfoPersistence userInfo = userInfoDao.getUserInfoByUsername(username);
 
         if (userInfo != null) {
             throw new InvalidParameterException("该用户名已存在");

@@ -17,7 +17,7 @@ public class UserInfoDaoIpl implements UserInfoDao {
     }
 
     @Override
-    public UserInfoPersistence getUserInfoByUserName(String username) {
+    public UserInfoPersistence getUserInfoByUsername(String username) {
         return userInfoMapper.getUserInfoByUsername(username);
     }
 
