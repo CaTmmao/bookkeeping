@@ -68,6 +68,13 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>0.8.6</version>
         </dependency>
+
+        <!--        shiro 支持 spring boot -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.7.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
