@@ -23,6 +23,7 @@ public class UserInfoServiceIpl implements UserInfoService {
         this.userInfoDaoIpl = userInfoDaoIpl;
     }
 
+    @Override
     public UserInfoCommon getUserInfoById(int id) {
         return Optional.ofNullable(userInfoDaoIpl.getUserInfoById(id))
             .map(userInfoP2CConverter::convert)
