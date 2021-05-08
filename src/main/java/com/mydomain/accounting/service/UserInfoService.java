@@ -9,4 +9,5 @@ public interface UserInfoService {
 
     void login(String username, String password);
 
+    UserInfoCommon register(String username, String password);
 }

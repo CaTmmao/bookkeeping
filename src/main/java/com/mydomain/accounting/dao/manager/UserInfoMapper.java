@@ -1,6 +1,7 @@
 package com.mydomain.accounting.dao.manager;
 
 import com.mydomain.accounting.model.persistence.UserInfoPersistence;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -12,4 +13,8 @@ public interface UserInfoMapper {
 
     @Select("SELECT * FROM hcas_userinfo WHERE username = #{username}")
     UserInfoPersistence getUserInfoByUsername(@Param("username") String username);
+
+    @Insert("INSERT into hcas_userinfo(username, password, salt, create_time) "
+        + "VALUES (#{username}, #{password}, #{salt}, #{createTime}) ")
+    void createNewUser(UserInfoPersistence userInfo);
 }

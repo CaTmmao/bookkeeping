@@ -11,15 +11,18 @@ public class UserInfoPersistence {
     private String password;
     private Instant createTime;
     private Instant updateTime;
+    private String salt;
 
     public UserInfoPersistence() {}
 
-    public UserInfoPersistence(int id, String username, String password, Instant createTime, Instant updateTime) {
+    public UserInfoPersistence(int id, String username, String password, Instant createTime, Instant updateTime,
+                               String salt) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.salt = salt;
     }
 
     public int getId() {
@@ -60,5 +63,13 @@ public class UserInfoPersistence {
 
     public void setUpdateTime(Instant updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

@@ -8,6 +8,12 @@ public class UserInfoPersistenceBuilder {
     private String password;
     private Instant createTime;
     private Instant updateTime;
+    private String salt;
+
+    public UserInfoPersistenceBuilder setSalt(String salt) {
+        this.salt = salt;
+        return this;
+    }
 
     public UserInfoPersistenceBuilder setId(int id) {
         this.id = id;
@@ -35,6 +41,6 @@ public class UserInfoPersistenceBuilder {
     }
 
     public UserInfoPersistence createUserInfo() {
-        return new UserInfoPersistence(id, username, password, createTime, updateTime);
+        return new UserInfoPersistence(id, username, password, createTime, updateTime, salt);
     }
 }
