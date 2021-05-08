@@ -30,6 +30,13 @@ public class UserInfoServiceIpl implements UserInfoService {
     }
 
     @Override
+    public UserInfoCommon getUserInfoByUsername(String username) {
+        return Optional.ofNullable(userInfoDaoIpl.getUserInfoByUserName(username))
+            .map(userInfoP2CConverter::convert)
+            .orElseThrow(() -> new ResourceNotFoundException("找不到该用户"));
+    }
+
+    @Override
     public void login(String username, String password) {
         // 代表当前用户
         Subject subject = SecurityUtils.getSubject();

@@ -9,4 +9,7 @@ import org.apache.ibatis.annotations.Select;
 public interface UserInfoMapper {
     @Select("SELECT * FROM hcas_userinfo WHERE ID = #{id}")
     public UserInfoPersistence getUserInfoById(@Param("id") int id);
+
+    @Select("SELECT * FROM hcas_userinfo WHERE username = #{username}")
+    public UserInfoPersistence getUserInfoByUsername(@Param("username") String username);
 }
