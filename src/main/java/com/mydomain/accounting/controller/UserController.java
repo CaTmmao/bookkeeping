@@ -7,9 +7,11 @@ import com.mydomain.accounting.service.UserInfoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("v1.0/users")
 public class UserController {
     //    private final UserInfoServiceIpl userInfoServiceIpl;
     private final UserInfoService userInfoService;
@@ -20,7 +22,7 @@ public class UserController {
         this.userInfoC2SConverter = userInfoC2SConverter;
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<com.mydomain.accounting.model.service.UserInfoService> getUserInfo(@PathVariable int id) {
         if (id <= 0) {
             throw new InvalidParameterException("参数错误");

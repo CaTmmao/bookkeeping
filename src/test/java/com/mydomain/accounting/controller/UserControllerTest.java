@@ -61,7 +61,7 @@ class UserControllerTest {
         when(userInfoService.getUserInfoById(id)).thenReturn(userInfoCommon);
 
         // act
-        mvc.perform(get("/user/" + id))
+        mvc.perform(get("/v1.0/users/" + id))
                 .andExpect(status().isOk());
 
         // assert
