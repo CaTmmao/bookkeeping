@@ -1,8 +1,7 @@
 package com.mydomain.accounting.service;
 
 import com.mydomain.accounting.converter.persistenceToCommon.UserInfoP2CConverter;
-import com.mydomain.accounting.dao.UserInfoDaoIpl;
-import com.mydomain.accounting.dao.manager.UserInfoMapper;
+import com.mydomain.accounting.dao.UserInfoDao;
 import com.mydomain.accounting.exception.ResourceNotFoundException;
 import com.mydomain.accounting.model.common.UserInfoCommon;
 import com.mydomain.accounting.model.persistence.UserInfoPersistence;
@@ -23,15 +22,12 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class UserInfoServiceIplTest {
     @Mock
-    UserInfoMapper userInfoMapper;
-
-    @Mock
-    private UserInfoDaoIpl userInfoDAOIpl;
+    private UserInfoDao userInfoDao;
     private UserInfoServiceIpl userInfoServiceIpl;
 
     @BeforeEach
     void setup() {
-        userInfoServiceIpl = new UserInfoServiceIpl(new UserInfoP2CConverter(), userInfoDAOIpl);
+        userInfoServiceIpl = new UserInfoServiceIpl(new UserInfoP2CConverter(), userInfoDao);
     }
 
     @Test
@@ -39,14 +35,14 @@ class UserInfoServiceIplTest {
         // arrange
         int id = 1;
         UserInfoPersistence userInfoPersistence = new UserInfoPersistenceBuilder()
-                .setId(id)
-                .setPassword("pwd")
-                .setUsername("user")
-                .setCreateTime(Instant.now())
-                .setUpdateTime(Instant.now())
-                .createUserInfo();
+            .setId(id)
+            .setPassword("pwd")
+            .setUsername("user")
+            .setCreateTime(Instant.now())
+            .setUpdateTime(Instant.now())
+            .createUserInfo();
 
-        when(userInfoDAOIpl.getUserInfoById(id)).thenReturn(userInfoPersistence);
+        when(userInfoDao.getUserInfoById(id)).thenReturn(userInfoPersistence);
 
         // act
         UserInfoCommon userInfoCommon = userInfoServiceIpl.getUserInfoById(id);
@@ -55,18 +51,18 @@ class UserInfoServiceIplTest {
         assertEquals(1, userInfoCommon.getId());
         assertEquals("pwd", userInfoCommon.getPassword());
         assertEquals("user", userInfoCommon.getUsername());
-        verify(userInfoDAOIpl).getUserInfoById(id);
+        verify(userInfoDao).getUserInfoById(id);
     }
 
     @Test
     void testGetUserInfoByIdWithInvalidId() {
         // arrange
         int id = -1;
-        when(userInfoDAOIpl.getUserInfoById(-1)).thenReturn(null);
+        when(userInfoDao.getUserInfoById(-1)).thenReturn(null);
 
         // act & assert
         assertThrows(ResourceNotFoundException.class, () -> userInfoServiceIpl.getUserInfoById(id));
-        verify(userInfoDAOIpl).getUserInfoById(id);
+        verify(userInfoDao).getUserInfoById(id);
     }
 
 }
