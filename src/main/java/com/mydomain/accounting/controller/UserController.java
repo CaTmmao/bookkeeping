@@ -1,5 +1,7 @@
 package com.mydomain.accounting.controller;
 
+import java.util.Map;
+
 import com.mydomain.accounting.converter.commonToService.UserInfoC2SConverter;
 import com.mydomain.accounting.exception.InvalidParameterException;
 import com.mydomain.accounting.model.common.UserInfoCommon;
@@ -9,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,9 +36,11 @@ public class UserController {
         return ResponseEntity.ok(userInfoC2SConverter.convert(userInfoCommon));
     }
 
-    @PostMapping()
-    public ResponseEntity<UserInfoServiceModel> register(@RequestParam("username") String username,
-                                                         @RequestParam("password") String password) {
+    @PostMapping(consumes = "application/json", // 可接收的客户端传来的媒体类型
+        produces = "application/json")// 向客户端返回的媒体类型
+    public ResponseEntity<UserInfoServiceModel> register(@RequestBody Map<String, String> param) {
+        String username = param.get("username");
+        String password = param.get("password");
         UserInfoCommon userInfo = userInfoService.register(username, password);
         return ResponseEntity.ok(userInfoC2SConverter.convert(userInfo));
     }
