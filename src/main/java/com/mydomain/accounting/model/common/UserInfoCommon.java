@@ -2,7 +2,7 @@ package com.mydomain.accounting.model.common;
 
 import org.springframework.stereotype.Service;
 
-@Service("UserInfoCommon")
+@Service
 public class UserInfoCommon {
     int id;
     String username;

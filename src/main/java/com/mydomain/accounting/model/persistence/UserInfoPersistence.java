@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
-@Service("UserInfoPersistence")
+@Service
 public class UserInfoPersistence {
     private int id;
     private String username;

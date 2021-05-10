@@ -2,7 +2,7 @@ package com.mydomain.accounting.model.service;
 
 import org.springframework.stereotype.Service;
 
-@Service("UserInfoService")
+@Service
 public class UserInfoServiceModel {
     String username;
 
