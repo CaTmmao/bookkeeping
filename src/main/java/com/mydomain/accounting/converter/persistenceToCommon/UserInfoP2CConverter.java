@@ -14,12 +14,14 @@ public class UserInfoP2CConverter extends Converter<UserInfoPersistence, UserInf
         int id = userInfoPersistence.getId();
         String name = userInfoPersistence.getUsername();
         String pwd = userInfoPersistence.getPassword();
+        String salt = userInfoPersistence.getSalt();
 
         return new UserInfoCommonBuilder()
-                .setId(id)
-                .setUsername(name)
-                .setPassword(pwd)
-                .createUserInfo();
+            .setId(id)
+            .setUsername(name)
+            .setPassword(pwd)
+            .setSalt(salt)
+            .createUserInfo();
     }
 
     @Override

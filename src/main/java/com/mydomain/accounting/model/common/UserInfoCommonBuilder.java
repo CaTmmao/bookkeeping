@@ -4,6 +4,12 @@ public class UserInfoCommonBuilder {
     private int id;
     private String username;
     private String password;
+    private String salt;
+
+    public UserInfoCommonBuilder setSalt(String salt) {
+        this.salt = salt;
+        return this;
+    }
 
     public UserInfoCommonBuilder setId(int id) {
         this.id = id;
@@ -21,6 +27,6 @@ public class UserInfoCommonBuilder {
     }
 
     public UserInfoCommon createUserInfo() {
-        return new UserInfoCommon(id, username, password);
+        return new UserInfoCommon(id, username, password, salt);
     }
 }

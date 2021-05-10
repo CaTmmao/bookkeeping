@@ -2,6 +2,7 @@ package com.mydomain.accounting.config;
 
 import java.util.LinkedHashMap;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -11,6 +12,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ShiroConfig {
+    static final int SALT_ITERATIONS = 1000;
+    static final String HASH_ALGORITHM_NAME = "SHA-256";
+
     @Bean
     public SecurityManager securityManager(Realm realm) {
         return new DefaultWebSecurityManager(realm);
@@ -39,5 +43,18 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilterChainDefinitionMap(shiroFilterDefinitionMap);
 
         return shiroFilterFactoryBean;
+    }
+
+    /**
+     * 匹配密码
+     */
+    @Bean
+    public HashedCredentialsMatcher matcher() {
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashAlgorithmName(HASH_ALGORITHM_NAME);
+        matcher.setHashIterations(SALT_ITERATIONS);
+        matcher.setStoredCredentialsHexEncoded(false); // 加密后的密码被转为了 base64，因此设置成 false
+
+        return matcher;
     }
 }
