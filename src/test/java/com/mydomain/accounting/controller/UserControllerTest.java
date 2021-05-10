@@ -4,17 +4,20 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mydomain.accounting.converter.commonToService.UserInfoC2SConverter;
 import com.mydomain.accounting.exception.GlobalExceptionHandler;
 import com.mydomain.accounting.model.common.UserInfoCommon;
 import com.mydomain.accounting.model.common.UserInfoCommonBuilder;
+import com.mydomain.accounting.model.service.UserInfoServiceModel;
+import com.mydomain.accounting.model.service.UserInfoServiceModelBuilder;
 import com.mydomain.accounting.service.UserInfoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,17 +37,14 @@ class UserControllerTest {
     @Mock
     UserInfoC2SConverter userInfoC2SConverter;
 
-    @InjectMocks
-    UserController userController;
-
     MockMvc mvc;
 
     @BeforeEach
     void setup() {
         mvc = MockMvcBuilders
-                .standaloneSetup(userController)
-                .setControllerAdvice(new GlobalExceptionHandler()) // 控制抛出的异常
-                .build();
+            .standaloneSetup(new UserController(userInfoService, userInfoC2SConverter))
+            .setControllerAdvice(new GlobalExceptionHandler()) // 控制抛出的异常
+            .build();
     }
 
     @Test
@@ -53,16 +53,24 @@ class UserControllerTest {
         int id = 1;
 
         UserInfoCommon userInfoCommon = new UserInfoCommonBuilder()
-                .setId(id)
-                .setUsername("name")
-                .setPassword("pwd")
-                .createUserInfo();
+            .setId(id)
+            .setUsername("name")
+            .setPassword("pwd")
+            .createUserInfo();
+
+        UserInfoServiceModel userInfo = new UserInfoServiceModelBuilder()
+            .setUsername("name")
+            .createUserInfo();
+
+        String responseString = new ObjectMapper().writeValueAsString(userInfo);
 
         when(userInfoService.getUserInfoById(id)).thenReturn(userInfoCommon);
+        when(userInfoC2SConverter.convert(userInfoCommon)).thenReturn(userInfo);
 
         // act
-        mvc.perform(get("/v1.0/users/" + id))
-                .andExpect(status().isOk());
+        mvc.perform(get("/v1.0/users/" + id).contentType("application/json"))
+            .andExpect(status().isOk())
+            .andExpect(content().string(responseString));
 
         // assert
         verify(userInfoService).getUserInfoById(id);
@@ -76,11 +84,9 @@ class UserControllerTest {
 
         // act
         mvc.perform(get("/user/" + id))
-                .andExpect(status().is4xxClientError())
-                .andExpect(res -> res.getResponse().getContentAsString().contains("参数错误"));
+            .andExpect(status().is4xxClientError());
 
         // assert
         verify(userInfoService, never()).getUserInfoById(id);
     }
-
 }
