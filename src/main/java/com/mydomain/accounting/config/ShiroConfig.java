@@ -37,7 +37,7 @@ public class ShiroConfig {
         LinkedHashMap<String, String> shiroFilterDefinitionMap = new LinkedHashMap<>();
 
         // 设置有先后顺序，先 put 进去的先应用
-        shiroFilterDefinitionMap.put("/v1.0/users", "anon"); // 用户相关接口，无需登录就可访问
+        shiroFilterDefinitionMap.put("/v1.0/users/**", "anon"); // 用户相关接口，无需登录就可访问
         shiroFilterDefinitionMap.put("/v1.0/session", "anon");
         shiroFilterDefinitionMap.put("/**", "authc"); // 其他接口，需要登录才能访问
         shiroFilterFactoryBean.setFilterChainDefinitionMap(shiroFilterDefinitionMap);
