@@ -1,4 +1,4 @@
-package com.mydomain.accounting.dao.manager;
+package com.mydomain.accounting.dao.mapper;
 
 import com.mydomain.accounting.model.persistence.UserInfoPersistence;
 import org.apache.ibatis.annotations.Insert;

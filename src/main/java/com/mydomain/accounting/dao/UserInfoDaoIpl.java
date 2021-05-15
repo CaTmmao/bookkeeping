@@ -1,6 +1,6 @@
 package com.mydomain.accounting.dao;
 
-import com.mydomain.accounting.dao.manager.UserInfoMapper;
+import com.mydomain.accounting.dao.mapper.UserInfoMapper;
 import com.mydomain.accounting.model.persistence.UserInfoPersistence;
 import org.springframework.stereotype.Repository;
 
