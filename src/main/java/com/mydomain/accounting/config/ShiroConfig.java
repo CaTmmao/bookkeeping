@@ -37,9 +37,12 @@ public class ShiroConfig {
         LinkedHashMap<String, String> shiroFilterDefinitionMap = new LinkedHashMap<>();
 
         // 设置有先后顺序，先 put 进去的先应用
-        shiroFilterDefinitionMap.put("/v1.0/users/**", "anon"); // 用户相关接口，无需登录就可访问
+        // 用户相关接口，无需登录就可访问
+        shiroFilterDefinitionMap.put("/v1.0/users/**", "anon");
+        shiroFilterDefinitionMap.put("/v1.0/tags/**", "anon");
         shiroFilterDefinitionMap.put("/v1.0/session", "anon");
-        shiroFilterDefinitionMap.put("/**", "authc"); // 其他接口，需要登录才能访问
+        // 其他接口，需要登录才能访问
+        shiroFilterDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(shiroFilterDefinitionMap);
 
         return shiroFilterFactoryBean;
@@ -53,7 +56,8 @@ public class ShiroConfig {
         HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
         matcher.setHashAlgorithmName(HASH_ALGORITHM_NAME);
         matcher.setHashIterations(SALT_ITERATIONS);
-        matcher.setStoredCredentialsHexEncoded(false); // 加密后的密码被转为了 base64，因此设置成 false
+        // 加密后的密码被转为了 base64，因此设置成 false
+        matcher.setStoredCredentialsHexEncoded(false);
 
         return matcher;
     }
