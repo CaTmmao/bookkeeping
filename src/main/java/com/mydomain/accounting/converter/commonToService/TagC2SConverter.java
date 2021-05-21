@@ -11,22 +11,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class TagC2SConverter extends Converter<TagCommonModel, TagServiceModel> {
     @Override
-    protected TagServiceModel doForward(TagCommonModel tagCommonModel) {
+    protected TagServiceModel doForward(TagCommonModel tag) {
         return new TagServiceModelBuilder()
-            .id(tagCommonModel.getId())
-            .description(tagCommonModel.getDescription())
-            .status(tagCommonModel.getStatus())
-            .userId(tagCommonModel.getUserId())
+            .id(tag.getId())
+            .description(tag.getDescription())
+            .status(tag.getStatus())
+            .userId(tag.getUserId())
             .build();
     }
 
     @Override
-    protected TagCommonModel doBackward(TagServiceModel tagServiceModel) {
+    protected TagCommonModel doBackward(TagServiceModel tag) {
         return new TagCommonModelBuilder()
-            .id(tagServiceModel.getId())
-            .description(tagServiceModel.getDescription())
-            .status(tagServiceModel.getStatus())
-            .userId(tagServiceModel.getUserId())
+            .id(tag.getId())
+            .description(tag.getDescription())
+            .status(tag.getStatus())
+            .userId(tag.getUserId())
             .build();
     }
 
