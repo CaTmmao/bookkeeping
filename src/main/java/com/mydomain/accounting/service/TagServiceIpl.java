@@ -27,7 +27,7 @@ public class TagServiceIpl implements TagService {
     public TagCommonModel createTag(String description, Long userId) {
         Optional.ofNullable(tagDao.getTagByTagDescription(description))
             .ifPresent((tag) -> {
-                throw new InvalidParameterException("已经存在该标签");
+                throw new InvalidParameterException(String.format("已经存在 description 为 %s 的标签", description));
             });
 
         TagPersistenceModel newTag = new TagPersistenceModelBuilder()
@@ -42,10 +42,13 @@ public class TagServiceIpl implements TagService {
 
     @Override
     public TagCommonModel updateTag(TagCommonModel tag) {
-        TagCommonModel tagDB = getTagByTagId(tag.getId());
+        Long tagId = tag.getId();
+        TagCommonModel tagDB = getTagByTagId(tagId);
 
-        if (!tag.getUserId().equals(tagDB.getUserId())) {
-            throw new InvalidParameterException("无法修改，该标签不是当前用户创建");
+        Long tagUserId = tag.getUserId();
+        if (!tagUserId.equals(tagDB.getUserId())) {
+            throw new InvalidParameterException(
+                String.format("无法修改，id 为 %s 的标签不是 userIf 为 %s 的用户创建的", tagId, tagUserId));
         }
 
         tagDao.updateTag(tagP2CConverter.reverse().convert(tag));
@@ -56,6 +59,6 @@ public class TagServiceIpl implements TagService {
     public TagCommonModel getTagByTagId(Long id) {
         return Optional.ofNullable(tagDao.getTagByTagId(id))
             .map(tagP2CConverter::convert)
-            .orElseThrow(() -> new ResourceNotFoundException("没有该标签"));
+            .orElseThrow(() -> new ResourceNotFoundException(String.format("id 为 %s 的标签不存在", id)));
     }
 }

@@ -35,14 +35,14 @@ public class UserInfoServiceIpl implements UserInfoService {
     public UserInfoCommon getUserInfoById(int id) {
         return Optional.ofNullable(userInfoDao.getUserInfoById(id))
             .map(userInfoP2CConverter::convert)
-            .orElseThrow(() -> new ResourceNotFoundException("找不到该用户"));
+            .orElseThrow(() -> new ResourceNotFoundException(String.format("找不到 id 为 %s 的用户", id)));
     }
 
     @Override
     public UserInfoCommon getUserInfoByUsername(String username) {
         return Optional.ofNullable(userInfoDao.getUserInfoByUsername(username))
             .map(userInfoP2CConverter::convert)
-            .orElseThrow(() -> new ResourceNotFoundException("找不到该用户"));
+            .orElseThrow(() -> new ResourceNotFoundException(String.format("找不到 username 为 %s 的用户", username)));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class UserInfoServiceIpl implements UserInfoService {
         UserInfoPersistence userInfo = userInfoDao.getUserInfoByUsername(username);
 
         if (userInfo != null) {
-            throw new InvalidParameterException("该用户名已存在");
+            throw new InvalidParameterException(String.format("username 为 %s 的用户已存在", username));
         }
 
         String salt = UUID.randomUUID().toString();

@@ -36,7 +36,7 @@ public class TagController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<TagServiceModel> getTagByTagId(@PathVariable Long id) {
         if (id == null || id <= 0L) {
-            throw new InvalidParameterException("未传 id 变量，并且 id 的值需要大于 0");
+            throw new InvalidParameterException(String.format("未传 id 变量，并且 id 的值需要大于 0,当前 id 值为 %s", id));
         }
 
         TagCommonModel resource = tagService.getTagByTagId(id);

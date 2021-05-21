@@ -29,7 +29,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserInfoServiceModel> getUserInfo(@PathVariable int id) {
         if (id <= 0) {
-            throw new InvalidParameterException("参数错误");
+            throw new InvalidParameterException(String.format("参数 id 的值应大于 0,当前值为 %s", id));
         }
 
         UserInfoCommon userInfoCommon = userInfoService.getUserInfoById(id);
