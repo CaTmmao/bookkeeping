@@ -38,4 +38,9 @@ public class TagDaoIpl implements TagDao {
     public List<TagPersistenceModel> getTagListByTagIdList(List<Long> tagIdList) {
         return tagMapper.getTagListByTagIdList(tagIdList);
     }
+
+    @Override
+    public List<TagPersistenceModel> getTagListByUserId(Long userId, int pageNum, int pageSize) {
+        return tagMapper.getTagListByUserId(userId, pageNum, pageSize);
+    }
 }

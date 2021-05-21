@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.UpdateProvider;
 public interface TagMapper {
     @SelectProvider(type = TagSqlProvider.class, method = "getTagListByTagIdList")
     List<TagPersistenceModel> getTagListByTagIdList(List<Long> tagIdList);
+
     /**
      * 创建标签
      * @param tag 标签对象（persistence 模型）
@@ -42,6 +43,19 @@ public interface TagMapper {
     @Select("SELECT id, status, description, user_id, create_time, update_time from hcas_tag "
         + "where id = #{id}")
     TagPersistenceModel getTagByTagId(@Param("id") Long id);
+
+    /**
+     * 通过 userId 获取标签列表
+     * @param userId   用户 id
+     * @param pageNum  第几页
+     * @param pageSize 每页几条数据
+     * @return 标签列表
+     */
+    @Select("SELECT id, status, description, user_id, create_time, update_time from hcas_tag"
+        + " WHERE user_id = #{userId}")
+    List<TagPersistenceModel> getTagListByUserId(@Param("userId") Long userId,
+                                                 @Param("pageNum") int pageNum,
+                                                 @Param("pageSize") int pageSize);
 
     /**
      * 更新标签信息

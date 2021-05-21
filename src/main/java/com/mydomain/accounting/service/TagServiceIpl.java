@@ -1,7 +1,10 @@
 package com.mydomain.accounting.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.github.pagehelper.PageInfo;
+import com.google.common.collect.ImmutableList;
 import com.mydomain.accounting.converter.persistenceToCommon.TagP2CConverter;
 import com.mydomain.accounting.dao.TagDao;
 import com.mydomain.accounting.exception.InvalidParameterException;
@@ -60,5 +63,14 @@ public class TagServiceIpl implements TagService {
         return Optional.ofNullable(tagDao.getTagByTagId(id))
             .map(tagP2CConverter::convert)
             .orElseThrow(() -> new ResourceNotFoundException(String.format("id 为 %s 的标签不存在", id)));
+    }
+
+    @Override
+    public PageInfo<TagCommonModel> getTagsByUserId(Long userId, int pageNum, int pageSize) {
+        List<TagPersistenceModel> tagList = tagDao.getTagListByUserId(userId, pageNum, pageSize);
+
+        return new PageInfo<>(
+            ImmutableList.copyOf(tagP2CConverter.convertAll(tagList))
+        );
     }
 }

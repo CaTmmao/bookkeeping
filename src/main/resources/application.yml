@@ -12,3 +12,7 @@ logging:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+
+pagehelper:
+  support-methods-arguments: true
+  offset-as-page-num: true

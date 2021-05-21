@@ -10,4 +10,5 @@ public interface TagDao {
     TagPersistenceModel getTagByTagId(Long id);
     void updateTag(TagPersistenceModel tag);
     List<TagPersistenceModel> getTagListByTagIdList(List<Long> tagIdList);
+    List<TagPersistenceModel> getTagListByUserId(Long userId, int pageNum, int pageSize);
 }

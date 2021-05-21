@@ -1,5 +1,6 @@
 package com.mydomain.accounting.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.mydomain.accounting.converter.commonToService.TagC2SConverter;
 import com.mydomain.accounting.exception.InvalidParameterException;
 import com.mydomain.accounting.model.common.TagCommonModel;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -30,6 +32,7 @@ public class TagController {
 
     /**
      * 通过标签id获取标签信息
+     *
      * @param id 标签id
      * @return 标签信息
      */
@@ -44,7 +47,27 @@ public class TagController {
     }
 
     /**
+     * 获取当前用户所有标签
+     *
+     * @param userId   用户 id
+     * @param pageNum  获取第几页
+     * @param pageSize 每页页数
+     * @return 标签列表
+     */
+    @GetMapping
+    public PageInfo<TagCommonModel> getTagsByUserId(@RequestParam("userId") Long userId,
+                                                    @RequestParam("pageNum") int pageNum,
+                                                    @RequestParam("pageSize") int pageSize) {
+        if (userId == null || pageNum == 0 || pageSize == 0) {
+            throw new InvalidParameterException("需要传入 userId, pageNum, pageSize 参数");
+        }
+
+        return tagService.getTagsByUserId(userId, pageNum, pageSize);
+    }
+
+    /**
      * 创建标签
+     *
      * @param tag 标签相关信息
      * @return 新创建的标签信息
      */
@@ -63,6 +86,7 @@ public class TagController {
 
     /**
      * 更新标签信息
+     *
      * @param tag 标签信息
      * @return 更新后的标签信息
      */
