@@ -1,5 +1,7 @@
 package com.mydomain.accounting.dao.mapper;
 
+import java.util.List;
+
 import com.mydomain.accounting.dao.provider.TagSqlProvider;
 import com.mydomain.accounting.model.persistence.TagPersistenceModel;
 import org.apache.ibatis.annotations.Insert;
@@ -7,17 +9,20 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 
 @Mapper
 public interface TagMapper {
+    @SelectProvider(type = TagSqlProvider.class, method = "getTagListByTagIdList")
+    List<TagPersistenceModel> getTagListByTagIdList(List<Long> tagIdList);
     /**
      * 创建标签
      * @param tag 标签对象（persistence 模型）
      */
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("INSERT into hcas_tag(description, status, user_id, create_time) "
-        + "values(#{description}, #{status}, #{userId}, now())")
+    @Insert("INSERT into hcas_tag(description, status, user_id) "
+        + "values(#{description}, #{status}, #{userId})")
     void createTag(TagPersistenceModel tag);
 
     /**

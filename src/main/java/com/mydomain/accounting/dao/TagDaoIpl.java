@@ -1,5 +1,7 @@
 package com.mydomain.accounting.dao;
 
+import java.util.List;
+
 import com.mydomain.accounting.dao.mapper.TagMapper;
 import com.mydomain.accounting.model.persistence.TagPersistenceModel;
 import org.springframework.stereotype.Repository;
@@ -30,5 +32,10 @@ public class TagDaoIpl implements TagDao {
     @Override
     public void updateTag(TagPersistenceModel tag) {
         tagMapper.updateTag(tag);
+    }
+
+    @Override
+    public List<TagPersistenceModel> getTagListByTagIdList(List<Long> tagIdList) {
+        return tagMapper.getTagListByTagIdList(tagIdList);
     }
 }

@@ -40,6 +40,7 @@ public class ShiroConfig {
         // 用户相关接口，无需登录就可访问
         shiroFilterDefinitionMap.put("/v1.0/users/**", "anon");
         shiroFilterDefinitionMap.put("/v1.0/tags/**", "anon");
+        shiroFilterDefinitionMap.put("/v1.0/records/**", "anon");
         shiroFilterDefinitionMap.put("/v1.0/session", "anon");
         // 其他接口，需要登录才能访问
         shiroFilterDefinitionMap.put("/**", "authc");
