@@ -15,6 +15,7 @@ import com.mydomain.accounting.model.common.TagCommonModel;
 import com.mydomain.accounting.model.persistence.RecordPersistenceModel;
 import com.mydomain.accounting.model.persistence.TagPersistenceModel;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RecordServiceIpl implements RecordService {
@@ -52,6 +53,7 @@ public class RecordServiceIpl implements RecordService {
 
     @SuppressWarnings("checkstyle:WhitespaceAround")
     @Override
+    @Transactional
     public RecordCommonModel createRecord(RecordCommonModel record) {
         // 检查当前用户是否可以使用这些标签
         List<Long> tagIdList = getTagIdList(record);
@@ -61,7 +63,7 @@ public class RecordServiceIpl implements RecordService {
         RecordPersistenceModel newRecord = recordP2CConverter.reverse().convert(record);
 
         /*
-         * 需要用事务来执行下面的语句
+         * 需要用事务来执行该方法
          * 原因：当 insertRecord 执行成功后，batchInsertRecordIdTagIdMapping 如果失败了，
          * 为了避免在数据库残留多余数据，需要撤销 insertRecord 的执行
          */
