@@ -16,6 +16,8 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,6 +34,7 @@ public class UserInfoServiceIpl implements UserInfoService {
     }
 
     @Override
+    @Cacheable(value = "userinfo", key = "#id")
     public UserInfoCommon getUserInfoById(int id) {
         return Optional.ofNullable(userInfoDao.getUserInfoById(id))
             .map(userInfoP2CConverter::convert)
@@ -56,6 +59,7 @@ public class UserInfoServiceIpl implements UserInfoService {
     }
 
     @Override
+    @CachePut(value = "userinfo", key = "#result.id")
     public UserInfoCommon register(String username, String password) {
         UserInfoPersistence userInfo = userInfoDao.getUserInfoByUsername(username);
 

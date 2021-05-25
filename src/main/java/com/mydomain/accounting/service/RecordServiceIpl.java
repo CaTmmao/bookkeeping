@@ -14,6 +14,8 @@ import com.mydomain.accounting.model.common.RecordCommonModel;
 import com.mydomain.accounting.model.common.TagCommonModel;
 import com.mydomain.accounting.model.persistence.RecordPersistenceModel;
 import com.mydomain.accounting.model.persistence.TagPersistenceModel;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,6 +76,7 @@ public class RecordServiceIpl implements RecordService {
     }
 
     @Override
+    @Cacheable(value = "record", key = "#recordId")
     public RecordCommonModel getRecordByRecordId(Long recordId) {
         return Optional.ofNullable(recordDao.getRecordByRecordId(recordId))
             .map(recordP2CConverter::convert)
@@ -88,6 +91,7 @@ public class RecordServiceIpl implements RecordService {
         return list;
     }
 
+    @CacheEvict(value = "record", key = "#record.id")
     @Override
     public RecordCommonModel updateRecord(RecordCommonModel record) {
         Long recordId = record.getId();
