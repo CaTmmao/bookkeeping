@@ -15,6 +15,20 @@ public class RecordCommonModel implements Serializable {
     String status;
     List<TagCommonModel> tagList;
 
+    public RecordCommonModel() {
+    }
+
+    public RecordCommonModel(Long id, Long userId, BigDecimal amount, String note, String category, String status,
+                             List<TagCommonModel> tagList) {
+        this.id = id;
+        this.userId = userId;
+        this.amount = amount;
+        this.note = note;
+        this.category = category;
+        this.status = status;
+        this.tagList = tagList;
+    }
+
     public Long getId() {
         return id;
     }

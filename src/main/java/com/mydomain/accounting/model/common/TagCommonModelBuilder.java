@@ -27,11 +27,6 @@ public final class TagCommonModelBuilder {
     }
 
     public TagCommonModel build() {
-        TagCommonModel tagCommonModel = new TagCommonModel();
-        tagCommonModel.setId(id);
-        tagCommonModel.setDescription(description);
-        tagCommonModel.setStatus(status);
-        tagCommonModel.setUserId(userId);
-        return tagCommonModel;
+        return new TagCommonModel(id, description, status, userId);
     }
 }

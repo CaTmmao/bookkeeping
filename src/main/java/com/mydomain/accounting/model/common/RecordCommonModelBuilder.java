@@ -55,14 +55,6 @@ public final class RecordCommonModelBuilder {
     }
 
     public RecordCommonModel build() {
-        RecordCommonModel recordCommonModel = new RecordCommonModel();
-        recordCommonModel.setId(id);
-        recordCommonModel.setUserId(userId);
-        recordCommonModel.setAmount(amount);
-        recordCommonModel.setNote(note);
-        recordCommonModel.setCategory(category);
-        recordCommonModel.setStatus(status);
-        recordCommonModel.setTagList(tagList);
-        return recordCommonModel;
+        return new RecordCommonModel(id, userId, amount, note, category, status, tagList);
     }
 }

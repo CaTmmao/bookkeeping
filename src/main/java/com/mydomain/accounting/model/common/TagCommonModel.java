@@ -8,6 +8,16 @@ public class TagCommonModel implements Serializable {
     String status;
     Long userId;
 
+    public TagCommonModel() {
+    }
+
+    public TagCommonModel(Long id, String description, String status, Long userId) {
+        this.id = id;
+        this.description = description;
+        this.status = status;
+        this.userId = userId;
+    }
+
     public Long getId() {
         return id;
     }
