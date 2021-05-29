@@ -1,9 +1,9 @@
 package com.mydomain.accounting.converter.persistenceToCommon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.Converter;
-import com.google.common.collect.ImmutableList;
 import com.mydomain.accounting.model.common.RecordCommonModel;
 import com.mydomain.accounting.model.common.RecordCommonModelBuilder;
 import com.mydomain.accounting.model.common.TagCommonModel;
@@ -23,8 +23,9 @@ public class RecordP2CConverter extends Converter<RecordPersistenceModel, Record
 
     @Override
     protected RecordCommonModel doForward(RecordPersistenceModel record) {
-        List<TagCommonModel> tagList =
-            ImmutableList.copyOf(tagP2CConverter.convertAll(record.getTagList()));
+        List<TagCommonModel> tagList = new ArrayList<>();
+        tagP2CConverter.convertAll(record.getTagList())
+            .forEach(tagList::add);
 
         return RecordCommonModelBuilder.builder()
             .userId(record.getUserId())
@@ -39,8 +40,10 @@ public class RecordP2CConverter extends Converter<RecordPersistenceModel, Record
 
     @Override
     protected RecordPersistenceModel doBackward(RecordCommonModel record) {
-        List<TagPersistenceModel> tagList = ImmutableList.copyOf(
-            tagP2CConverter.reverse().convertAll(record.getTagList()));
+        List<TagPersistenceModel> tagList = new ArrayList<>();
+        tagP2CConverter.reverse()
+            .convertAll(record.getTagList())
+            .forEach(tagList::add);
 
         return RecordPersistenceModelBuilder.builder()
             .id(record.getId())

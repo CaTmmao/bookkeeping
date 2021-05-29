@@ -1,10 +1,9 @@
 package com.mydomain.accounting.converter.commonToService;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.Converter;
-import com.google.common.collect.ImmutableList;
 import com.mydomain.accounting.model.common.RecordCommonModel;
 import com.mydomain.accounting.model.common.RecordCommonModelBuilder;
 import com.mydomain.accounting.model.common.TagCommonModel;
@@ -20,8 +19,9 @@ public class RecordC2SConverter extends Converter<RecordCommonModel, RecordServi
 
     @Override
     protected RecordServiceModel doForward(RecordCommonModel record) {
-        List<TagServiceModel> tagList =
-            ImmutableList.copyOf(tagC2SConverter.convertAll(record.getTagList()));
+        List<TagServiceModel> tagList = new ArrayList<>();
+        tagC2SConverter.convertAll(record.getTagList())
+            .forEach(tagList::add);
 
         return RecordServiceModelBuilder.builder()
             .id(record.getId())
@@ -35,12 +35,12 @@ public class RecordC2SConverter extends Converter<RecordCommonModel, RecordServi
 
     @Override
     protected RecordCommonModel doBackward(RecordServiceModel record) {
-        List<TagCommonModel> tagList = new LinkedList<>();
+        List<TagCommonModel> tagList = new ArrayList<>();
         if (record.getTagList() != null) {
-            tagList = ImmutableList
-                .copyOf(tagC2SConverter.reverse().convertAll(record.getTagList()));
+            tagC2SConverter.reverse()
+                .convertAll(record.getTagList())
+                .forEach(tagList::add);
         }
-
 
         return RecordCommonModelBuilder.builder()
             .id(record.getId())
