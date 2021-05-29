@@ -1,9 +1,11 @@
 package com.mydomain.accounting.model.common;
 
+import java.io.Serializable;
+
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserInfoCommon {
+public class UserInfoCommon implements Serializable {
     int id;
     String username;
     String password;
