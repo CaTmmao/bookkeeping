@@ -1,8 +1,6 @@
 package com.mydomain.accounting.model.common;
 
-import java.io.Serializable;
-
-public class TagCommonModel implements Serializable {
+public class TagCommonModel {
     Long id;
     String description;
     String status;

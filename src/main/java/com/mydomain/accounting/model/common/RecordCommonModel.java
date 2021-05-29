@@ -1,12 +1,9 @@
 package com.mydomain.accounting.model.common;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-/* 需要实现序列化是因为缓存在 redis　中时需要对对象序列化, redis 中存储的都是序列化后的内容，
- 以及从 redis 中获取的数据会被 redis 进行反序列化恢复为我们需要的对象类型*/
-public class RecordCommonModel implements Serializable {
+public class RecordCommonModel {
     Long id;
     Long userId;
     BigDecimal amount;
