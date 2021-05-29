@@ -1,10 +1,10 @@
 package com.mydomain.accounting.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.github.pagehelper.PageInfo;
-import com.google.common.collect.ImmutableList;
 import com.mydomain.accounting.converter.persistenceToCommon.TagP2CConverter;
 import com.mydomain.accounting.dao.TagDao;
 import com.mydomain.accounting.exception.InvalidParameterException;
@@ -12,6 +12,8 @@ import com.mydomain.accounting.exception.ResourceNotFoundException;
 import com.mydomain.accounting.model.common.TagCommonModel;
 import com.mydomain.accounting.model.persistence.TagPersistenceModel;
 import com.mydomain.accounting.model.persistence.TagPersistenceModelBuilder;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -43,6 +45,7 @@ public class TagServiceIpl implements TagService {
         return tagP2CConverter.convert(newTag);
     }
 
+    @CacheEvict(cacheNames = "tag", key = "#tag.id")
     @Override
     public TagCommonModel updateTag(TagCommonModel tag) {
         Long tagId = tag.getId();
@@ -58,6 +61,7 @@ public class TagServiceIpl implements TagService {
         return getTagByTagId(tag.getId());
     }
 
+    @Cacheable(cacheNames = "tag", key = "#id")
     @Override
     public TagCommonModel getTagByTagId(Long id) {
         return Optional.ofNullable(tagDao.getTagByTagId(id))
@@ -65,12 +69,15 @@ public class TagServiceIpl implements TagService {
             .orElseThrow(() -> new ResourceNotFoundException(String.format("id 为 %s 的标签不存在", id)));
     }
 
+    @Cacheable(cacheNames = "tagList", key = "#userId")
     @Override
     public PageInfo<TagCommonModel> getTagsByUserId(Long userId, int pageNum, int pageSize) {
         List<TagPersistenceModel> tagList = tagDao.getTagListByUserId(userId, pageNum, pageSize);
 
-        return new PageInfo<>(
-            ImmutableList.copyOf(tagP2CConverter.convertAll(tagList))
-        );
+        List<TagCommonModel> list = new ArrayList<>();
+        tagP2CConverter.convertAll(tagList)
+            .forEach(list::add);
+
+        return new PageInfo<>(list);
     }
 }

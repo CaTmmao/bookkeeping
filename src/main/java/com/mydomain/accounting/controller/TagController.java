@@ -56,10 +56,14 @@ public class TagController {
      */
     @GetMapping
     public PageInfo<TagCommonModel> getTagsByUserId(@RequestParam("userId") Long userId,
-                                                    @RequestParam("pageNum") int pageNum,
-                                                    @RequestParam("pageSize") int pageSize) {
-        if (userId == null || pageNum == 0 || pageSize == 0) {
-            throw new InvalidParameterException("需要传入 userId, pageNum, pageSize 参数");
+                                                    @RequestParam(value = "pageNum",
+                                                        defaultValue = "1", required = false)
+                                                        int pageNum,
+                                                    @RequestParam(value = "pageSize",
+                                                        defaultValue = "10", required = false)
+                                                        int pageSize) {
+        if (userId.equals(0) || pageNum == 0 || pageSize == 0) {
+            throw new InvalidParameterException("参数的值需要 > 0");
         }
 
         return tagService.getTagsByUserId(userId, pageNum, pageSize);
